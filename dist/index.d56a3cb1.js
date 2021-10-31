@@ -512,10 +512,14 @@ async function fetchCountryDetails(name) {
         const population = document.createElement('p');
         population.textContent = `${country.name} is situated in ${country.subregion}. It has a population of ${country.population} people.`;
         countryContainer.appendChild(population);
-        // // maak een <p> voor nog meer informatie
+        // maak een <p> voor nog meer informatie
         const capital = document.createElement('p');
         capital.textContent = `The capital is ${country.capital} and you can pay with ${createCurrencyDescription(country.currencies)}`;
         countryContainer.appendChild(capital);
+        // maak een <p> voor de talen
+        const languages = document.createElement('p');
+        languages.textContent = createLanguageDescription(country.languages);
+        countryContainer.appendChild(languages);
         // voeg de country <div> toe aan de countryContainer
         countryInfoBox.appendChild(countryContainer);
     } catch (e) {
@@ -533,6 +537,19 @@ function createCurrencyDescription(currencies) {
     let output = 'and you can pay with ';
     if (currencies.length === 2) return output + `${currencies[0].name} and ${currencies[1].name}'s`;
     return output + `${currencies[0].name}'s`;
+}
+function createLanguageDescription(languages) {
+    let output = 'They speak ';
+    for(let i = 0; i < languages.length; i++){
+        // als dit de laatste entry is, voeg dan " and " toe
+        if (i === languages.length - 1) // de return zorgt ervoor dat er niet meer naar de andere if-statements gekeken wordt
+        return output = output + " and " + languages[i].name;
+        // als de array sowieso maar twee talen bevat of we zijn bij de één-na-laatste naam, voeg dan alleen de taal toe
+        if (languages.length === 2 || i === languages.length - 2) output = output + languages[i].name;
+        else // in andere alle gevallen voegen we een komma en spatie toe
+        output = output + languages[i].name + ", ";
+    }
+    return output;
 }
 
 },{"axios":"1IeuP","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1IeuP":[function(require,module,exports) {
